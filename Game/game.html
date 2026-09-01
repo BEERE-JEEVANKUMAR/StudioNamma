@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mario Game</title>
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="score">
+            Score : <span id="score">0</span>
+        </h1>
+        <div class="bomma">
+            <!-- Mario -->
+            <img
+                id="mario"
+                class="mario"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoB1aR0NDNa6d4Vua9WIZ1HemfWf4GwWrHere2SarzBw&s=10"
+                alt="Mario"
+            >
+            <!-- Pipe -->
+            <img
+                id="pipe"
+                class="pipe"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOlHuNSKLZe8RPWWW-XO-Moz9de4-Hy
+                mMgy053KWAvBA&s=10"
+                alt="Pipe"
+            >
+        </div>
+    </div>
+    <!-- Ground -->
+    <footer>
+        <div class="footer">
+            <img src="https://static.wikia.nocookie.net/nintendo/images/6/63/Brick_Block.png/revision/latest/scale-to-width-down/1753?cb=20151206062204&path-prefix=en">
+            <img src="https://static.wikia.nocookie.net/nintendo/images/6/63/Brick_Block.png/revision/latest/scale-to-width-down/1753?cb=20151206062204&path-prefix=en">
+            <img src="https://static.wikia.nocookie.net/nintendo/images/6/63/Brick_Block.png/revision/latest/scale-to-width-down/1753?cb=20151206062204&path-prefix=en">
+            <img src="https://static.wikia.nocookie.net/nintendo/images/6/63/Brick_Block.png/revision/latest/scale-to-width-down/1753?cb=20151206062204&path-prefix=en">
+            <img src="https://static.wikia.nocookie.net/nintendo/images/6/63/Brick_Block.png/revision/latest/scale-to-width-down/1753?cb=20151206062204&path-prefix=en">
+            <img src="https://static.wikia.nocookie.net/nintendo/images/6/63/Brick_Block.png/revision/latest/scale-to-width-down/1753?cb=20151206062204&path-prefix=en">
+            <img src="https://static.wikia.nocookie.net/nintendo/images/6/63/Brick_Block.png/revision/latest/scale-to-width-down/1753?cb=20151206062204&path-prefix=en">
+            <img src="https://static.wikia.nocookie.net/nintendo/images/6/63/Brick_Block.png/revision/latest/scale-to-width-down/1753?cb=20151206062204&path-prefix=en">
+            <img src="https://static.wikia.nocookie.net/nintendo/images/6/63/Brick_Block.png/revision/latest/scale-to-width-down/1753?cb=20151206062204&path-prefix=en">
+            <img src="https://static.wikia.nocookie.net/nintendo/images/6/63/Brick_Block.png/revision/latest/scale-to-width-down/1753?cb=20151206062204&path-prefix=en">
+        </div>
+    </footer>
+    <script>
+        // Get elements
+        const mario = document.getElementById("mario");
+        const pipe = document.getElementById("pipe");
+        const scoreElement = document.getElementById("score");
+        // Mario position
+        let marioX = 20;
+        let marioY = 0;
+        // Jump variables
+        let velocityY = 0;
+        let isJumping = false;
+        // Game variables
+        let score = 0;
+        const gravity = 0.8;
+        const jumpPower = 20;
+        const speed = 10;
+        // Keyboard controls
+        document.addEventListener("keydown", function(event) {
+            // LEFT
+            if (event.key === "ArrowLeft") {
+                marioX -= speed;
+                if (marioX < 0) {
+                    marioX = 0;
+                }
+                mario.style.left = marioX + "px";
+            }
+            // RIGHT
+            if (event.key === "ArrowRight") {
+                marioX += speed;
+                if (marioX > window.innerWidth - 100) {
+                    marioX = window.innerWidth - 100;
+                }
+                mario.style.left = marioX + "px";
+            }
+            // JUMP
+            if (
+                event.key === "ArrowUp" ||
+                event.code === "Space"
+            ) {
+                if (!isJumping) {
+                    isJumping = true;
+                    velocityY = jumpPower;
+                }
+            }
+        });
+        // GAME LOOP
+        function gameLoop() {
+            // Jump
+            if (isJumping) {
+                marioY += velocityY;
+                velocityY -= gravity;
+                mario.style.bottom =
+                    (120 + marioY) + "px";
+                // Ground
+                if (marioY <= 0) {
+                    marioY = 0;
+                    velocityY = 0;
+                    isJumping = false;
+                    mario.style.bottom = "120px";
+                }
+            }
+            requestAnimationFrame(gameLoop);
+        }
+        // Start game
+        gameLoop();
+    </script>
+</body>
+</html>
